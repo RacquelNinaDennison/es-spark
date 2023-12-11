@@ -60,7 +60,7 @@ export default function Home() {
 			setConversation(JSON.parse(storedConversation));
 		}
 	}, []);
-
+	// adding conversation to storage
 	useEffect(() => {
 		localStorage.setItem(
 			"conversation",
