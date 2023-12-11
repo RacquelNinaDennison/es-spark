@@ -26,6 +26,9 @@ const getAssistantMessage = async (
 			run.id
 		);
 		console.log("waiting for assistant");
+		if (run.status == "failed") {
+			break;
+		}
 		console.log(run.status);
 	}
 
