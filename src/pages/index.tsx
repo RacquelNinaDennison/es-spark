@@ -51,22 +51,11 @@ export default function Home() {
 
 	useEffect(() => {
 		const storedThreadId = localStorage.getItem("threadId");
-		const storedConversation =
-			localStorage.getItem("conversation");
+
 		if (storedThreadId) {
 			setThreadId(storedThreadId);
 		}
-		if (storedConversation) {
-			setConversation(JSON.parse(storedConversation));
-		}
 	}, []);
-	// adding conversation to storage
-	useEffect(() => {
-		localStorage.setItem(
-			"conversation",
-			JSON.stringify(conversation)
-		);
-	}, [conversation]);
 
 	const mutation: UseMutationResult<
 		gptGeneratorResponse,
