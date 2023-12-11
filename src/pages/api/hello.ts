@@ -13,6 +13,7 @@ export default async function handler(
 	const { threadID, userData } = req.body;
 	console.log(threadID);
 	console.log(userData);
+	console.log("In api request");
 	const message = await runAssitant(threadID, userData);
 	res.send({
 		message: message.message,
