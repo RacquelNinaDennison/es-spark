@@ -17,6 +17,7 @@ import {
 	gptGeneratorRequest,
 	gptGeneratorResponse,
 } from "@/types";
+import { Loading } from "@/Components /Loading";
 
 interface Message {
 	type: "user" | "response";
@@ -42,6 +43,7 @@ const parseAndRenderText = (text: string): ReactNode[] => {
 
 export default function Home() {
 	const [input, setInput] = useState<string>("");
+	const [isLoading, setIsLoading] = useState(false);
 	const [conversation, setConversation] = useState<
 		Message[]
 	>([]);
@@ -51,7 +53,6 @@ export default function Home() {
 
 	useEffect(() => {
 		const storedThreadId = localStorage.getItem("threadId");
-
 		if (storedThreadId) {
 			setThreadId(storedThreadId);
 		}
@@ -65,6 +66,7 @@ export default function Home() {
 		mutationFn: async (
 			data
 		): Promise<gptGeneratorResponse> => {
+			setIsLoading(true);
 			try {
 				const response = await axios.post(
 					"/api/hello",
@@ -81,6 +83,8 @@ export default function Home() {
 					console.error("Error in Axios request:", error);
 				}
 				throw error;
+			} finally {
+				setIsLoading(false);
 			}
 		},
 		onSuccess: (data) => {
@@ -101,7 +105,6 @@ export default function Home() {
 			...prev,
 			{ type: "user", text: input },
 		]);
-		console.log("handing mutation");
 		mutation.mutate({
 			userData: input,
 			threadID: threadId,
@@ -114,6 +117,7 @@ export default function Home() {
 	) => {
 		setInput(event.target.value);
 	};
+
 	return (
 		<div className='min-h-screen bg-white flex flex-col'>
 			<header className='flex justify-center items-center bg-white py-4'>
@@ -123,7 +127,13 @@ export default function Home() {
 					<span className='text-yellow-400'>Tutor</span>
 				</h1>
 			</header>
-			<div className='flex-grow overflow-y-auto p-5'>
+
+			<div className='flex-grow overflow-y-auto p-5 relative'>
+				{/* {isLoading ? (
+					<div className='absolute top-0 left-0 w-full h-full flex justify-center items-center bg-opacity-50 bg-white-700'>
+						<Loading />
+					</div>
+				) : ( */}
 				<div className='max-w-md mx-auto space-y-2 overflow-y-scroll'>
 					{conversation.map((entry, index) => (
 						<div
@@ -138,7 +148,9 @@ export default function Home() {
 						</div>
 					))}
 				</div>
+				{/* )} */}
 			</div>
+
 			<form
 				onSubmit={handleSubmit}
 				className='p-3 bg-white'
