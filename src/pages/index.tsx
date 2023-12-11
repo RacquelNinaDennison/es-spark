@@ -138,7 +138,7 @@ export default function Home() {
 					{conversation.map((entry, index) => (
 						<div
 							key={index}
-							className={`p-5 m-3 rounded-lg ${
+							className={`p-8 m-3 rounded-lg ${
 								entry.type === "user"
 									? "bg-blue-600 text-right"
 									: "bg-green-600 text-left"
