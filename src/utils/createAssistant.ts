@@ -3,7 +3,8 @@ import OpenAI from "openai";
 import { sleep } from "openai/core";
 dotenv.config();
 
-const API_Key = process.env.API_KEY;
+const API_Key =
+	"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";
 const client = new OpenAI({ apiKey: API_Key });
 
 const getAssistantMessage = async (
