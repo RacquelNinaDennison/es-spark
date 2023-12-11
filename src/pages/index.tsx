@@ -130,8 +130,8 @@ export default function Home() {
 							key={index}
 							className={`p-5 m-3 rounded-lg ${
 								entry.type === "user"
-									? "bg-blue-500 text-right"
-									: "bg-green-500 text-left"
+									? "bg-blue-600 text-right"
+									: "bg-green-600 text-left"
 							}`}
 						>
 							{parseAndRenderText(entry.text)}
